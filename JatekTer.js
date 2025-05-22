@@ -28,19 +28,32 @@ export default class JatekTer {
       }
       console.log(this.#kivalasztottKartyaLista);
       if (this.#kivalasztottKartyaLista.length === 2) {
+        this.#triggerBlocked();
         let f1 = this.#kivalasztottKartyaLista[0];
         let f2 = this.#kivalasztottKartyaLista[1];
         if (f1.getFajlNev() == f2.getFajlNev()) {
           console.log("pár");
+          
         } else {
           console.log("nem pár");
           setTimeout(() => {
             f1.setAllapot();
             f2.setAllapot();
+            
           }, 2000);
         }
+        this.#triggerUnBlocked();
         this.#kivalasztottKartyaLista.splice(0);
       }
     });
+  }
+
+  #triggerBlocked(){
+    const e=new CustomEvent("gameBlocked")
+    window.dispatchEvent(e)
+  }
+  #triggerUnBlocked(){
+    const e=new CustomEvent("gameUnBlocked")
+    window.dispatchEvent(e)
   }
 }
