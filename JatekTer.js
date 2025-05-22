@@ -1,23 +1,22 @@
-export default class JatekTer {
-    #kartyaLista = [];
-    #kivalasztottKartyaLista = [];
-    #szuloElem;
-    constructor(szuloElem) {
-        this.#kartyaLista = kartyaLista;
-        this.#kivalasztottKartyaLista = [];
-        this.#szuloElem = szuloElem;
-        this.kartyaMegjelenit();
-    }
+import Kartya from "./Kartya.js";
 
-    kartyaMegjelenit() {
-        const szuloElem = document.querySelector("#jatekTer");
-        this.#kartyaLista.forEach(kartya => {
-            const divElem = document.createElement("div");
-            divElem.classList.add("kartya");
-            divElem.dataset.id = kartya.id;
-            divElem.dataset.allapot = kartya.allapot;
-            divElem.style.backgroundImage = `url(${kartya.fajlnev})`;
-            szuloElem.appendChild(divElem);
-        });
-    }
+export default class JatekTer {
+  #kartyaLista = [];
+  #szElem = document.querySelector(".jatekter");
+  #kivalasztottKartyaLista = [];
+  constructor(kartyaLista) {
+    this.#kartyaLista = kartyaLista;
+    this.#init();
+  }
+  #init() {
+    this.#kever();
+    this.#kartyaLista.forEach((element, index) => {
+      const kartya = new Kartya(index, element, this.#szElem);
+    });
+  }
+  #kever(){
+    this.#kartyaLista.sort((a,b)=>{
+        return Math.random()-0.5
+    })
+  }
 }
